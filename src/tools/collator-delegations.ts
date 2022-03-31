@@ -25,7 +25,6 @@ const main = async () => {
   // Instantiate Api
   const api = await getApiFor(argv);
   const apiAt = argv.at ? await api.at(await api.rpc.chain.getBlockHash(argv.at)) : api;
-  
 
   const formattedCollator = api.registry.createType("EthereumAccountId", argv.collator).toString();
 

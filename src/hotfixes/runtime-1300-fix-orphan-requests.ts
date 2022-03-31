@@ -13,7 +13,6 @@ Ex: ./node_modules/.bin/ts-node-transpile-only src/hotfixes/runtime-1300-fix-orp
    --account-priv-key <key> \
 */
 
-
 import yargs from "yargs";
 import fs from "fs";
 

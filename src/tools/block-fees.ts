@@ -5,8 +5,7 @@ import { DispatchInfo } from "@polkadot/types/interfaces";
 
 import { exploreBlockRange, getApiFor, NETWORK_YARGS_OPTIONS } from "..";
 
-const WEIGHT_PER_GAS=1_000_000_000_000n /  40_000_000n
-
+const WEIGHT_PER_GAS = 1_000_000_000_000n / 40_000_000n;
 
 const argv = yargs(process.argv.slice(2))
   .usage("Usage: $0")
@@ -104,11 +103,9 @@ const main = async () => {
             ) {
               if (extrinsic.method.section == "ethereum") {
                 // For Ethereum tx we caluculate fee by first converting weight to gas
-                const gasFee=dispatchInfo.weight.toBigInt() / WEIGHT_PER_GAS;
+                const gasFee = dispatchInfo.weight.toBigInt() / WEIGHT_PER_GAS;
                 // And then multiplying by gasPrice
-                txFees =
-                  (gasFee *
-                    (extrinsic.method.args[0] as any).gasPrice.toBigInt())
+                txFees = gasFee * (extrinsic.method.args[0] as any).gasPrice.toBigInt();
               } else {
                 // For a regular substrate tx, we use the partialFee
                 txFees = fee.partialFee.toBigInt();
@@ -138,8 +135,12 @@ const main = async () => {
                   }${origin.toString()}: ${txFees.toString().padStart(19, " ")} (${printMOVRs(
                     txFees,
                     5
-                  )} MOVR) (Balance diff: ${(toBalance.data.free.toBigInt() - fromBalance.data.free.toBigInt()).toString().padStart(20, " ")})(${printMOVRs(
-                    (toBalance.data.free.toBigInt() - fromBalance.data.free.toBigInt()),
+                  )} MOVR) (Balance diff: ${(
+                    toBalance.data.free.toBigInt() - fromBalance.data.free.toBigInt()
+                  )
+                    .toString()
+                    .padStart(20, " ")})(${printMOVRs(
+                    toBalance.data.free.toBigInt() - fromBalance.data.free.toBigInt(),
                     5
                   )} MOVR)`
                 );
@@ -154,7 +155,7 @@ const main = async () => {
             const deposit = (event.data[0] as any).toBigInt();
             // Compare deposit event amont to what should have been sent to deposit (if they don't match, which is not a desired behavior)
             if (txFees - txBurnt !== deposit) {
-              console.log("Desposit Amount Discrepancy!")
+              console.log("Desposit Amount Discrepancy!");
               console.log(`fees not burnt : ${(txFees - txBurnt).toString().padStart(30, " ")}`);
               console.log(`       deposit : ${deposit.toString().padStart(30, " ")}`);
             }
@@ -163,9 +164,7 @@ const main = async () => {
       }
       sumBlockFees += blockFees;
       sumBlockBurnt += blockBurnt;
-      console.log(
-        `#${blockDetails.block.header.number} Fees : ${printMOVRs(blockFees, 4)} MOVRs`
-      );
+      console.log(`#${blockDetails.block.header.number} Fees : ${printMOVRs(blockFees, 4)} MOVRs`);
       previousBlockHash = blockDetails.block.hash.toString();
     }
   );
@@ -176,7 +175,6 @@ const main = async () => {
       4
     )}/block, ${printMOVRs(sumBlockFees, 4)} Total`
   );
-
 
   // Log difference in supply, we should be equal to the burnt fees
   console.log(

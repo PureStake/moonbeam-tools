@@ -27,7 +27,11 @@ const main = async () => {
 
   const account = await apiAt.query.system.account(argv.address);
 
-  console.log(`#${blockNumber} - ${argv.address} [free: ${account.data.free.toBigInt()}, reserved: ${account.data.reserved.toBigInt()}, miscFrozen: ${account.data.miscFrozen.toBigInt()}, feeFrozen: ${account.data.feeFrozen.toBigInt()}]`);
+  console.log(
+    `#${blockNumber} - ${
+      argv.address
+    } [free: ${account.data.free.toBigInt()}, reserved: ${account.data.reserved.toBigInt()}, miscFrozen: ${account.data.miscFrozen.toBigInt()}, feeFrozen: ${account.data.feeFrozen.toBigInt()}]`
+  );
   api.disconnect();
 };
 

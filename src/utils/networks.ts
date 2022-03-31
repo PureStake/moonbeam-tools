@@ -5,7 +5,13 @@ import { typesBundlePre900 } from "moonbeam-types-bundle";
 import { listenBlocks, printBlockDetails, RealtimeBlockDetails } from "./monitoring";
 import { Options } from "yargs";
 
-export type NETWORK_NAME = "stagenet" | "alphanet" | "moonsama" | "moonsilver" | "moonriver" | "moonbeam";
+export type NETWORK_NAME =
+  | "stagenet"
+  | "alphanet"
+  | "moonsama"
+  | "moonsilver"
+  | "moonriver"
+  | "moonbeam";
 
 export const NETWORK_WS_URLS: { [name in NETWORK_NAME]: string } = {
   stagenet: "wss://wss.api.stagenet.gcp.purestake.run",

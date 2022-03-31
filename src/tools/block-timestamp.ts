@@ -53,7 +53,9 @@ const main = async () => {
 
     const targetDate = new Date(currentTimestamp.toNumber() + 6000 * diffCount);
     console.log(
-      `#${currentBlock.block.header.number.toNumber()}: ${new Date(currentTimestamp.toNumber()).toUTCString()}`
+      `#${currentBlock.block.header.number.toNumber()}: ${new Date(
+        currentTimestamp.toNumber()
+      ).toUTCString()}`
     );
 
     // We get the timestamp from X blocks before to have a better approximation
@@ -79,12 +81,8 @@ const main = async () => {
         `#${atBlockNumber} (+${diffCount}): target: ${targetDate.toUTCString()}, expected: ${expectedDate.toUTCString()}`
       );
     } else {
-      console.log(
-        `#${atBlockNumber} (+${diffCount}): target: ${targetDate.toUTCString()}`
-      );
-
+      console.log(`#${atBlockNumber} (+${diffCount}): target: ${targetDate.toUTCString()}`);
     }
-      
   }
   await api.disconnect();
 };

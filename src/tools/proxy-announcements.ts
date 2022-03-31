@@ -1,5 +1,5 @@
 // This script is specific to the moonbeam foundation
-// It allows to verify proxy announcement against transfers from a csv file 
+// It allows to verify proxy announcement against transfers from a csv file
 
 import chalk from "chalk";
 import yargs from "yargs";
@@ -104,7 +104,9 @@ const main = async () => {
         });
       })
       .flat(),
-    ...Object.keys(sumByAddress).map((from) => [["Total", from, "", numberWithCommas(sumByAddress[from]), ""]])
+    ...Object.keys(sumByAddress).map((from) => [
+      ["Total", from, "", numberWithCommas(sumByAddress[from]), ""],
+    ])
   );
 
   console.log(

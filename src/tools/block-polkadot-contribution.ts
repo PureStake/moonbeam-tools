@@ -49,30 +49,34 @@ const main = async () => {
     blockNumbers.push(i);
   }
 
-  await promiseConcurrent(20, async (blockNumber) => {
-    const blockHash = await api.rpc.chain.getBlockHash(blockNumber)
-    const records = await api.query.system.events.at(blockHash);
+  await promiseConcurrent(
+    20,
+    async (blockNumber) => {
+      const blockHash = await api.rpc.chain.getBlockHash(blockNumber);
+      const records = await api.query.system.events.at(blockHash);
 
-    const contrib = records.find(
-      ({ event }) => event.section == "crowdloan" && event.method == "Contributed"
-    );
-    if (contrib) {
-      const [account, paraId, amount] = contrib.event.data as any;
-      if (!contributors[paraId.toString()]) {
-        contributors[paraId.toString()] = {};
+      const contrib = records.find(
+        ({ event }) => event.section == "crowdloan" && event.method == "Contributed"
+      );
+      if (contrib) {
+        const [account, paraId, amount] = contrib.event.data as any;
+        if (!contributors[paraId.toString()]) {
+          contributors[paraId.toString()] = {};
+        }
+        const para = contributors[paraId.toString()];
+        if (!para[account.toString()]) {
+          para[account.toString()] = {
+            count: 0,
+            amount: 0n,
+          };
+        }
+        const contributor = para[account.toString()];
+        contributor.count++;
+        contributor.amount += amount.toBigInt();
       }
-      const para = contributors[paraId.toString()];
-      if (!para[account.toString()]) {
-        para[account.toString()] = {
-          count: 0,
-          amount: 0n,
-        };
-      }
-      const contributor = para[account.toString()];
-      contributor.count++;
-      contributor.amount += amount.toBigInt();
-    }
-  }, blockNumbers);
+    },
+    blockNumbers
+  );
 
   for (const paraId in contributors) {
     console.log(`=== ${paraId}`);
@@ -82,9 +86,9 @@ const main = async () => {
     );
     for (const account of accounts) {
       console.log(
-        ` - ${account.padStart(48, " ")} [${para[account].count.toString().padStart(6)}x]: ${printDOTs(
-          para[account].amount
-        )}`
+        ` - ${account.padStart(48, " ")} [${para[account].count
+          .toString()
+          .padStart(6)}x]: ${printDOTs(para[account].amount)}`
       );
     }
     console.log(`\n`);

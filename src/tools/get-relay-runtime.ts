@@ -38,7 +38,7 @@ const main = async () => {
 
   const blockHash = (await api.rpc.chain.getBlockHash(argv.at)).toString();
 
-  const code = await api.rpc.state.getStorage(":code", blockHash) as any;
+  const code = (await api.rpc.state.getStorage(":code", blockHash)) as any;
   fs.writeFileSync("runtime.wasm", Buffer.from(code.unwrap()));
 
   await api.disconnect();

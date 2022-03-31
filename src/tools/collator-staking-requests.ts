@@ -38,7 +38,7 @@ const main = async () => {
       if (stateData.requests.requests.toJSON()[formattedCollator]) {
         requests.push({
           id: stateData.id,
-          request: stateData.requests.requests.toJSON()[formattedCollator]
+          request: stateData.requests.requests.toJSON()[formattedCollator],
         });
       }
     }
@@ -53,8 +53,8 @@ const main = async () => {
       tokens > 20000n
         ? chalk.red(tokens.toString().padStart(6))
         : tokens > 2000n
-          ? chalk.yellow(tokens.toString().padStart(6))
-          : tokens.toString().padStart(6);
+        ? chalk.yellow(tokens.toString().padStart(6))
+        : tokens.toString().padStart(6);
 
     const blockLefts =
       (req.request.whenExecutable - roundInfo.current.toNumber()) * roundInfo.length.toNumber() +
@@ -63,7 +63,9 @@ const main = async () => {
     console.log(
       `#${req.request.whenExecutable} (${Math.floor(timeLeft / 60 / 60)
         .toString()
-        .padStart(5)}h): ${req.request.action.toString().padStart(10)} ${tokenString} by ${req.id.toHex()}`
+        .padStart(5)}h): ${req.request.action
+        .toString()
+        .padStart(10)} ${tokenString} by ${req.id.toHex()}`
     );
   }
   console.log(`Pending revoke: ${totalRevoked / 10n ** 18n}`);

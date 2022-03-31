@@ -73,16 +73,16 @@ const main = async () => {
       candidates[delegation.owner.toHex()].totalDelegators += 1;
       totalDelegations += delegation.amount.toBigInt();
     }
-    // This is used to know how many delegation are left to count if the delegator is leaving 
-    const delegationLeft = stateData.delegations.reduce((p, delegation)=>{
+    // This is used to know how many delegation are left to count if the delegator is leaving
+    const delegationLeft = stateData.delegations.reduce((p, delegation) => {
       p[delegation.owner.toHex()] = delegation;
       return p;
     }, {});
-    
-    const isLeavingAt = stateData.status.isLeaving && stateData.status.asLeaving.toNumber() || 0;
+
+    const isLeavingAt = (stateData.status.isLeaving && stateData.status.asLeaving.toNumber()) || 0;
     for (const requestData of stateData.requests.requests) {
       const request = requestData[1].toJSON();
-      const collatorId = request.collator.toLowerCase()
+      const collatorId = request.collator.toLowerCase();
       // Checking because of bug allowing pending request even if no collator
       if (candidates[collatorId] && (!isLeavingAt || request.whenExecutable < isLeavingAt)) {
         candidates[collatorId].pendingRevoke += BigInt(request.amount);
@@ -99,9 +99,7 @@ const main = async () => {
       for (const collatorId of Object.keys(delegationLeft)) {
         const delegation = delegationLeft[collatorId];
         const day = Math.ceil(
-          (Math.max(isLeavingAt, roundInfo.current.toNumber()) -
-            roundInfo.current.toNumber()) /
-            4
+          (Math.max(isLeavingAt, roundInfo.current.toNumber()) - roundInfo.current.toNumber()) / 4
         );
         candidates[collatorId].pendingRevoke += delegation.amount.toBigInt();
         candidates[collatorId].totalRevokable[day] += delegation.amount.toBigInt();

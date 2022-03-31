@@ -417,7 +417,6 @@ export function generateBlockDetailsLog(
           ? // If gasPrice is not indicated, we should use the base fee defined in that block
             payload.asEip1559?.maxFeePerGas.toBigInt() || 0n
           : (payload as any as EthTransaction).gasPrice.toBigInt();
-
         return p + (BigInt(gasPrice) * dispatchInfo.weight.toBigInt()) / 25000n;
       }
       return p + fee.partialFee.toBigInt();
@@ -436,6 +435,7 @@ export function generateBlockDetailsLog(
   const transferred = blockDetails.txWithEvents
     .map((tx) => {
       if (tx.extrinsic.method.section == "ethereum" && tx.extrinsic.method.method == "transact") {
+
         const payload = tx.extrinsic.method.args[0] as EthereumTransactionTransactionV2;
         let gasPrice = payload.isLegacy
           ? payload.asLegacy?.gasPrice.toBigInt()

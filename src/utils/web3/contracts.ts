@@ -93,14 +93,14 @@ export const callContract = async (
     throw new Error(`Error calling contract!`);
   }
 
-//   console.log(
-//     `Transaction for ${call.funcName} (${call.params.join(",")}) sent: ${tx.transactionHash}`
-//   );
+  //   console.log(
+  //     `Transaction for ${call.funcName} (${call.params.join(",")}) sent: ${tx.transactionHash}`
+  //   );
   const startTime = Date.now();
   while (Date.now() - startTime < 60000) {
     let rcpt: TransactionReceipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
     if (rcpt) {
-    //   console.log(`- block #${rcpt.blockNumber} (${rcpt.blockHash})`);
+      //   console.log(`- block #${rcpt.blockNumber} (${rcpt.blockHash})`);
       return;
     }
     await new Promise((resolve) => {

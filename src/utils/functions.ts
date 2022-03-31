@@ -6,7 +6,6 @@ export const promiseConcurrent = <T, R>(
   list: T[]
 ): Promise<R[]> => pMap(list, mapper, { concurrency: concurrency });
 
-
 export const numberWithCommas = (x: number | bigint | string) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+};

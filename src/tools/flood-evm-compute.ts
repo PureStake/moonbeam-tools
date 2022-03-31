@@ -28,12 +28,12 @@ const argv = yargs(process.argv.slice(2))
     threshold: {
       type: "number",
       description: "Minimum number of txs in the pool before refilling",
-      default: 500
+      default: 500,
     },
     count: {
       type: "number",
       description: "Number of txs to send when refilling",
-      default: 200
+      default: 200,
     },
   })
   .check(function (argv) {

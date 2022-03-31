@@ -28,13 +28,13 @@ const main = async () => {
 
   const contractAddress = api.registry.createType("EthereumAccountId", argv.contract).toString();
 
-  const contractStorages = await apiAt.query.evm.accountStorages.entries(contractAddress) as any;
+  const contractStorages = (await apiAt.query.evm.accountStorages.entries(contractAddress)) as any;
 
   console.log(`key,value`);
   for (const storage of contractStorages) {
     const key = storage[0].toHex().slice(2);
-    const address = `0x${key.slice(64+32, 64+32+40)}`;
-    const h1 = `0x${key.slice(64+32+40+32, 64+32+40+32+64)}`;
+    const address = `0x${key.slice(64 + 32, 64 + 32 + 40)}`;
+    const h1 = `0x${key.slice(64 + 32 + 40 + 32, 64 + 32 + 40 + 32 + 64)}`;
     const storageData = storage[1].toHex();
     console.log(`${h1},${storageData}`);
   }
