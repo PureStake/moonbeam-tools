@@ -7,7 +7,7 @@
   "browser": "dist/index.umd.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@moonbeam-network/api-augment": "^0.1605.3",
+    "@moonbeam-network/api-augment": "^0.1700.0",
     "@polkadot/api": "^8.8.2",
     "@polkadot/util": "^9.5.1",
     "@polkadot/util-crypto": "^9.5.1",
